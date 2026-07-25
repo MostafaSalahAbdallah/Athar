@@ -1,3 +1,4 @@
+import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoHomeOutline, IoSettingsOutline } from "react-icons/io5";
 import { RiAwardLine } from "react-icons/ri";
 import { BsBook, BsClipboard2Check } from "react-icons/bs";
@@ -45,21 +46,14 @@ function Sidebar(props) {
         ></label>
 
         {/* Sidebar content */}
-        {/* User */}
         <div className="w-80 min-h-full bg-base-200 text-base-content p-6 flex flex-col justify-between">
           <div>
             <div className="flex items-center gap-3 border-b border-base-300 pb-4">
-              <div className="avatar">
-                <div className="w-14 rounded-full  ring-offset-2">
-                  <img src={props.user} alt="User" />
-                </div>
-              </div>
+
 
               <div className="flex-1">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-lg">
-                    {props.userName}
-                  </h3>
+                <div className="flex items-center gap-4">
+
                   <label className="swap swap-rotate cursor-pointer">
                     <input
                       type="checkbox"
@@ -85,9 +79,15 @@ function Sidebar(props) {
                       <path d="M21.64 13a1 1 0 0 0-1.05-.14 8.05 8.05 0 0 1-3.37.73A8.15 8.15 0 0 1 9.08 5.49a8.59 8.59 0 0 1 .25-2A1 1 0 0 0 8 2.36 10.14 10.14 0 1 0 22 14.05a1 1 0 0 0-.36-1.05z" />
                     </svg>
                   </label>
+                  <IoSettingsOutline className="text-xl text-base cursor-pointer" />
+                  <IoIosNotificationsOutline className="text-xl text-base cursor-pointer" />
                 </div>
-
-                <p className="text-xs opacity-70">أهلاً بك</p>
+              </div>
+              {/* User Avatar */}
+              <div className="avatar">
+                <div className="w-14 rounded-full  ring-offset-2">
+                  <img src={props.user} alt="User" />
+                </div>
               </div>
             </div>
             {/* Athar Logo */}
@@ -98,27 +98,27 @@ function Sidebar(props) {
                 className="w-20"
               />
             </div>
-              <h1 className="font-2 font-bold text-cyan-600 text-2xl text-center">منصة أثر</h1>
+            <h1 className="font-2 font-bold text-cyan-600 text-2xl text-center">منصة أثر</h1>
             {/* Menu Items */}
             <div className="mt-6 space-y-3">
               <button dir="rtl" className="btn bg-base-300 text-base-content font-2 rounded-xl hover:bg-cyan-700 hover:text-white justify-start w-full">
-               <IoHomeOutline />  الرئيسية
+                <IoHomeOutline />  الرئيسية
               </button>
 
               <button dir="rtl" className="btn bg-base-300 text-base-content font-2 rounded-xl hover:bg-cyan-700 hover:text-white justify-start w-full">
-               <BsBook /> المكتبة 
+                <BsBook /> المكتبة
               </button>
 
               <button dir="rtl" className="btn bg-base-300 text-base-content font-2 rounded-xl hover:bg-cyan-700 hover:text-white justify-start w-full">
-              <BsClipboard2Check />  المراجعة 
+                <BsClipboard2Check />  المراجعة
               </button>
 
               <button dir="rtl" className="btn bg-base-300 text-base-content font-2 rounded-xl hover:bg-cyan-700 hover:text-white justify-start w-full">
-              <RiAwardLine />  الإنجازات 
+                <RiAwardLine />  الإنجازات
               </button>
 
               <button dir="rtl" className="btn bg-base-300 text-base-content font-2 rounded-xl hover:bg-cyan-700 hover:text-white justify-start w-full">
-              <IoSettingsOutline />  الإعدادت 
+                <IoSettingsOutline />  الإعدادت
               </button>
             </div>
           </div>
