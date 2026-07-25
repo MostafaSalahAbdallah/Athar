@@ -1,0 +1,40 @@
+/* Fonts */
+@import "tailwindcss";
+@plugin "daisyui";
+
+.font-1 {
+  font-family: "Alexandria", sans-serif;
+}
+
+.font-2 {
+  font-family: "Tajawal", sans-serif;
+}
+
+.font-3 {
+  font-family: "Cairo", sans-serif;
+}
+
+.font-4 {
+  font-family: "Amiri", serif;
+}
+
+/* Background Colors */
+.bg-1 {
+  background-color: #fef2f2;
+}
+
+.bg-2 {
+  background-color: #337fa1;
+}
+
+.bg-3 {
+  background-color: #286a89;
+}
+
+.bg-4 {
+  background-color: #f1e6dc;
+}
+
+.bg-5 {
+  background-color: #d9e4e9;
+}
