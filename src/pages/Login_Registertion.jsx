@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import '../App.css';
 import '../css/Login.css';
 
-// استدعاء المكونات بدون التعديل على بنيتها
 import Button from '../components/Button';
 import Input from '../components/Input';
 import UserName from '../components/UserName';
@@ -15,11 +14,9 @@ import Age from '../components/Age';
 export default function Login_Registertion() {
   const [activeTab, setActiveTab] = useState('login');
 
-  // حالات فحص وتحقق كلمة المرور
   const [passValue, setPassValue] = useState('');
   const [confirmPassValue, setConfirmPassValue] = useState('');
 
-  // شروط كلمة المرور
   const reqs = {
     length: passValue.length >= 8,
     uppercase: /[A-Z]/.test(passValue),
@@ -28,21 +25,18 @@ export default function Login_Registertion() {
     special: /[@$!%*?&]/.test(passValue)
   };
 
-  // حساب عدد الشروط المحققة
   const passedCount = Object.values(reqs).filter(Boolean).length;
   const strengthPercentage = passValue.length > 0 ? Math.max((passedCount / 5) * 100, 10) : 0;
   
-  // فحص تطابق كلمتي المرور بدقة
   const isMatch = passValue.length > 0 && confirmPassValue.length > 0 && passValue === confirmPassValue;
 
-  // تحديد لون الشريط بناءً على القوة
   const getStrengthColor = () => {
-    if (passedCount <= 2) return '#e74c3c'; // أحمر
-    if (passedCount <= 4) return '#f1c40f'; // أصفر
-    return '#2ecc71'; // أخضر
+    if (passedCount <= 2) return '#e74c3c';
+    if (passedCount <= 4) return '#f1c40f'; 
+    return '#2ecc71'; 
   };
 
-  // التعامل مع الانتقال للخطوة التالية مع التحقق من التطابق والشروط
+  
   const handleStep1Submit = (e) => {
     e.preventDefault();
 
@@ -56,7 +50,6 @@ export default function Login_Registertion() {
       return;
     }
 
-    // الانتقال للخطوة التالية في حال استيفاء جميع الشروط والتطابق
     setActiveTab('registerStep2');
   };
 
@@ -66,11 +59,9 @@ export default function Login_Registertion() {
 
   return (
     <div className="login-container">
-      {/* القسم الأيمن (النماذج) */}
       <div className="right-side" dir="rtl">
         <div className="login-box">
           
-          {/* أزرار التنقل العلوية */}
           <div className="toggle-container">
             <button
               type="button"
@@ -88,7 +79,6 @@ export default function Login_Registertion() {
             </button>
           </div>
 
-          {/* 1. نموذج تسجيل الدخول */}
           {activeTab === 'login' && (
             <div className="form-content active">
               <h2>تسجيل الدخول</h2>
@@ -141,28 +131,23 @@ export default function Login_Registertion() {
             </div>
           )}
 
-          {/* 2. الخطوة الأولى من إنشاء الحساب */}
           {activeTab === 'registerStep1' && (
             <div className="form-content active">
               <form onSubmit={handleStep1Submit}>
                 
-                {/* الاسم الكامل */}
                 <div className="form-control input-fullname">
                   <Input fieldName="الاسم الكامل" placeholder="ادخل أسمك الكامل"  />
                 </div>
 
-                {/* البريد الإلكتروني */}
                 <div className="form-control input-email-custom">
                   <label>البريد الإلكتروني</label>
                   <Email />
                 </div>
                 
-                {/* كلمة المرور */}
                 <div className="form-control input-password-custom" onInput={(e) => setPassValue(e.target.value)}>
                   <Password />
                 </div>
 
-                {/* تأكيد كلمة المرور */}
                 <div className="form-control input-confirm-pass">
                   <label>تأكيد كلمة المرور</label>
                   <input
@@ -175,7 +160,6 @@ export default function Login_Registertion() {
                   />
                 </div>
 
-                {/* نص المطابقة والشريط التفاعلي */}
                 <div className="strength-section">
                   {confirmPassValue.length > 0 && (
                     <small className={`match-message ${isMatch ? 'match-success' : 'match-error'}`}>
@@ -194,7 +178,6 @@ export default function Login_Registertion() {
                   </div>
                 </div>
 
-                {/* قائمة الشروط */}
                 <ul className="password-requirements">
                   <li className={reqs.length ? 'valid' : ''}>8 أحرف على الأقل</li>
                   <li className={reqs.uppercase ? 'valid' : ''}>حرف كبير (A-Z)</li>
@@ -235,7 +218,6 @@ export default function Login_Registertion() {
             </div>
           )}
 
-          {/* 3. الخطوة الثانية من إنشاء الحساب */}
           {activeTab === 'registerStep2' && (
             <div className="form-content active">
               <form onSubmit={(e) => e.preventDefault()}>
@@ -284,14 +266,12 @@ export default function Login_Registertion() {
             </div>
           )}
 
-          {/* الفوتر */}
           <div className="footer-links">
             <p>هل تواجه مشكلة؟ تواصل معنا عبر <span className="email">Athar@gmail.com</span></p>
           </div>
         </div>
       </div>
 
-      {/* القسم الأيسر */}
       <div className="left-side">
         <div className="al-aqsa-illustration"></div>
         <svg className="wave-shape" viewBox="0 0 100 100" preserveAspectRatio="none">
