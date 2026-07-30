@@ -38,3 +38,14 @@
 .bg-5 {
   background-color: #d9e4e9;
 }
+
+.steps_body {
+  background-color: #f8fcfe;
+}
+
+.skip {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  font-size: 13px;
+}
