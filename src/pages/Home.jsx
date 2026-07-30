@@ -13,7 +13,10 @@ function Home(){
     return(
         <div>
             <Sidebar logo={logo} user={user} userName={userName} />
-            
+            <Button name="التالي" />
+            <IoMdMic className="w-10 text-cyan-700"/>
+            <Card img={user} descripiton="أكبر كتاب حديث" title="الأربعين"/>
+            <Password/>
         </div>
     )
 }
