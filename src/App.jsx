@@ -1,6 +1,8 @@
 import './App.css'
 import Home from '../src/pages/Home'
 import Login_Registertion from "./pages/Login_Registertion";
+import List from "./pages/List";
+
 function App() {
 
   return (

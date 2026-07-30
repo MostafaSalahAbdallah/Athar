@@ -12,8 +12,9 @@ import Stat from "../components/Stat";
 import Progress from "../components/Progress";
 import Tasks from "../components/Tasks";
 import Dock from "../components/Dock";
+import Hero from "../components/Hero";
 let userName = "مصطفى صلاح" //! Should come from backend!!!
-function Home() {
+function List() {
     return (
         <div>
             <div className="hidden md:block">
@@ -23,13 +24,17 @@ function Home() {
             <div className="block md:hidden">
                 <Dock />
             </div>
-            <Stat days={12} hadith={145} accuracy={92} />
-            <Progress title="الأربعين النووية" progress={100} />
-            <Tasks />
+            <br className="block md:hidden" />
+            <Hero 
+                img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNiZvR1CvWoPfsikkVGri1il1EJ1q22MSVFql_UXd1cA&s=10.jpg"
+                title="الأربعين النووية"
+                description="ألفه الأمام النووي، و هو من أشهر كتب الحديث النبوي الشريف، و قد جمع فيه الإمام النووي الأحاديث الصحيحة التي وردت عن النبي صلى الله عليه وسلم، و قد اعتنى الإمام النووي بشرح هذه الأحاديث و توضيح معانيها و فوائدها."
+                reminder="مراجعة اليوم"
+            />
             <br className="block md:hidden" />
             <br className="block md:hidden" />
 
         </div>
     )
 }
-export default Home;
+export default List;
