@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { IoClose } from "react-icons/io5";
-import { FiCheckCircle, FiAlertTriangle, FiXCircle, FiStar, FiAward } from "react-icons/fi";
-import { hadithsService } from "../../../services/hadithsService";
+import { FiCheckCircle, FiAlertTriangle, FiXCircle } from "react-icons/fi";
 
 /**
  * RecitationResultsModal — Displays recitation performance results:
@@ -12,12 +11,9 @@ import { hadithsService } from "../../../services/hadithsService";
  * - Smooth entrance and exit animations (animate-modalIn / animate-modalOut)
  * - Auto-marks hadith as memorized (status 2) when accuracy >= 80%
  */
-export default function RecitationResultsModal({ isOpen, onClose, summary, extras = [], hadithId = null, wasHidden = false }) {
+export default function RecitationResultsModal({ isOpen, onClose, summary, extras = [] }) {
   const [isClosing, setIsClosing] = useState(false);
   const [shouldRender, setShouldRender] = useState(isOpen);
-  const [memorizedStatus, setMemorizedStatus] = useState(null); // null | "pending" | "success" | "error"
-  const [showCongrats, setShowCongrats] = useState(false);
-  const memorizedCalledRef = useRef(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -32,57 +28,6 @@ export default function RecitationResultsModal({ isOpen, onClose, summary, extra
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
-
-  // Auto-mark as memorized (status 2) when accuracy >= 80%, coverage >= 90%, and text was hidden
-  useEffect(() => {
-    if (!isOpen || !summary || !hadithId || memorizedCalledRef.current) return;
-
-    // Compute accuracy and coverage inline
-    const extractVal = (obj, ...keys) => {
-      for (const key of keys) {
-        if (obj && obj[key] !== undefined && obj[key] !== null) return obj[key];
-        if (obj?.metrics && obj.metrics[key] !== undefined && obj.metrics[key] !== null) return obj.metrics[key];
-        if (obj?.Metrics && obj.Metrics[key] !== undefined && obj.Metrics[key] !== null) return obj.Metrics[key];
-      }
-      return undefined;
-    };
-
-    let rawAcc = extractVal(summary, "accuracy", "Accuracy", "accuracyPercentage", "AccuracyPercentage", "accuracyPercent", "AccuracyPercent", "score", "Score") ?? 0;
-    if (typeof rawAcc === "number" && rawAcc > 0 && rawAcc <= 1) rawAcc = rawAcc * 100;
-    const accuracyValue = Number(rawAcc) || 0;
-
-    let rawCov = extractVal(summary, "coverage", "Coverage", "coveragePercentage", "CoveragePercentage", "coveragePercent", "CoveragePercent") ?? 0;
-    if (typeof rawCov === "number" && rawCov > 0 && rawCov <= 1) rawCov = rawCov * 100;
-    const coverageValue = Number(rawCov) || 0;
-
-    const meetsConditions = wasHidden && accuracyValue >= 80 && coverageValue >= 90;
-
-    if (meetsConditions) {
-      memorizedCalledRef.current = true;
-      setMemorizedStatus("pending");
-      setShowCongrats(true);
-      hadithsService.updateHadithProgress(hadithId, 2)
-        .then(() => setMemorizedStatus("success"))
-        .catch((err) => {
-          console.warn("Could not mark hadith as memorized:", err?.message);
-          setMemorizedStatus("error");
-        });
-    }
-  }, [isOpen, summary, hadithId, wasHidden]);
-
-  // Reset on each new session (new hadithId or new summary)
-  useEffect(() => {
-    memorizedCalledRef.current = false;
-    setMemorizedStatus(null);
-    setShowCongrats(false);
-  }, [hadithId, summary]);
-
-  // Auto-dismiss congratulation banner after 4 seconds
-  useEffect(() => {
-    if (!showCongrats) return;
-    const timer = setTimeout(() => setShowCongrats(false), 4000);
-    return () => clearTimeout(timer);
-  }, [showCongrats]);
 
   const handleClose = useCallback(() => {
     if (isClosing) return;
@@ -484,26 +429,6 @@ export default function RecitationResultsModal({ isOpen, onClose, summary, extra
             )}
           </div>
 
-          {/* Memorized Status Indicator */}
-          {memorizedStatus === "pending" && (
-            <div className="flex items-center justify-center gap-2 pt-1">
-              <span className="loading loading-spinner loading-xs text-emerald-500" />
-              <span className="font-2 text-xs text-base-content/60">جاري تحديث حالة الحفظ...</span>
-            </div>
-          )}
-          {memorizedStatus === "success" && (
-            <div className="flex items-center justify-center gap-2 pt-2 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl px-4 py-2.5 border border-emerald-200/60 dark:border-emerald-900/40">
-              <FiStar className="text-emerald-500 text-sm shrink-0" />
-              <span className="font-2 text-xs text-emerald-700 dark:text-emerald-400 font-bold">
-                تم تحديث الحديث إلى "تم الحفظ" ✓
-              </span>
-            </div>
-          )}
-          {memorizedStatus === "error" && (
-            <div className="flex items-center justify-center gap-2 pt-1">
-              <span className="font-2 text-xs text-red-500/70">تعذر تحديث حالة الحفظ، تحقق من الاتصال</span>
-            </div>
-          )}
         </div>
       </div>
     </div>
